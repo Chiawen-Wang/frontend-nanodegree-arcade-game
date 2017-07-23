@@ -4,3 +4,20 @@ body {
 canvas{
     border:solid red;
 }
+.Contain{
+    position: absolute;
+    right:180px;
+    top:50px;
+    color:white;
+    font-size: 30px;
+}
+#winTag{
+    position: absolute;
+    top: 100px;
+    left: 190px;
+    font-weight: bolder;
+    color: #E01E47;
+    font-size: 100px;
+    display: none;
+
+}
