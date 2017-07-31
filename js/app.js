@@ -3,11 +3,12 @@ var player_x = 1000;
 var player_y = 1000;
 var collision_flag = 0;
 var winCount = 0;
+var starCount = 0;
 var Enemy = function(speed) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
     this.x = 0;
-    this.y = Math.floor(Math.random()*240) + 40;
+    this.y = Math.floor(Math.random()*200) + 40;
     this.speed = speed;
     this.sprite = 'images/enemy-bug.png';
 };
@@ -26,8 +27,6 @@ Enemy.prototype.update = function(dt) {
             collision_flag = 1;
             //console.log("inscope");
         }
-
-
 };
 
 // Draw the enemy on the screen, required method for game
@@ -58,6 +57,7 @@ player.prototype.update = function(){
         //console.log(collision_flag);
         player_x = this.x;
         player_y = this.y;
+
     }
 
  if(this.left){
@@ -86,6 +86,7 @@ player.prototype.update = function(){
           ctx.fillText("You win!",300,200);
           document.getElementById("winTag").style.display = "block";
           document.getElementsByTagName("span")[0].innerHTML = winCount;
+
           //console.log("you win");
         }
     }
@@ -98,6 +99,8 @@ player.prototype.update = function(){
     }
     if(this.y == 380){
        document.getElementById("winTag").style.display = "none";
+       starCount = 0;
+          document.getElementById("starcount").innerHTML = starCount;
     }
 
     player_x = this.x;
@@ -132,11 +135,24 @@ player.prototype.handleInput = function(direc) {
     }
 };
 var Coin = function(num){
-    this.x = Math.floor(Math.random()*50*num);
+    this.x = Math.floor(Math.random()*45*num);
     this.y = Math.floor(Math.random()*24*num) + 50;
     this.sprite = 'images/lit.png';
 };
 Coin.prototype.update = function(){
+    if(collision_flag!=1 && this.x <= player_x + 20 && this.x >= player_x - 20 && this.y <= player_y + 20 && this.y >= player_y - 20){
+        this.x = 1000;
+        this.y = 1000;
+        starCount += 1;
+        document.getElementById("starcount").innerHTML = starCount;
+    }
+    else if(collision_flag == 1){
+        starCount = 0;
+        document.getElementById("starcount").innerHTML = starCount;
+        this.x = Math.floor(Math.random()*500);
+        this.y = Math.floor(Math.random()*240) + 50;
+        //collision_flag = 0;
+    }
 
 
 };
